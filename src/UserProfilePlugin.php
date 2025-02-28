@@ -131,7 +131,7 @@ class UserProfilePlugin implements Plugin
         );
     }
 
-    public function registerUserMenu(bool $condition = true,)
+    public function registerUserMenu(bool $condition = true)
     {
         $this->registerUserMenu = $condition;
 
@@ -142,20 +142,20 @@ class UserProfilePlugin implements Plugin
     {
         if ($this->registerUserMenu) {
             Filament::serving(function () {
-            if (Filament::getCurrentPanel()->hasTenancy()) {
-                // @phpstan-ignore-next-line
-                $tenantId = request()->route()->parameter('tenant');
-                if ($tenantId && $tenant = app(Filament::getCurrentPanel()->getTenantModel())::where(Filament::getCurrentPanel()->getTenantSlugAttribute() ?? 'id', $tenantId)->first()) {
+                if (Filament::getCurrentPanel()->hasTenancy()) {
+                    // @phpstan-ignore-next-line
+                    $tenantId = request()->route()->parameter('tenant');
+                    if ($tenantId && $tenant = app(Filament::getCurrentPanel()->getTenantModel())::where(Filament::getCurrentPanel()->getTenantSlugAttribute() ?? 'id', $tenantId)->first()) {
+                        Filament::getCurrentPanel()->userMenuItems([
+                            'account' => MenuItem::make()->url($this->getProfilePage()::getUrl(panel: Filament::getCurrentPanel()->getId(), tenant: $tenant))->label(__('filament-user-profile::default.user_menu_label')),
+                        ]);
+                    }
+                } else {
                     Filament::getCurrentPanel()->userMenuItems([
-                        'account' => MenuItem::make()->url($this->getProfilePage()::getUrl(panel: Filament::getCurrentPanel()->getId(), tenant: $tenant))->label(__('filament-user-profile::default.user_menu_label')),
+                        'account' => MenuItem::make()->url($this->getProfilePage()::getUrl())->label(__('filament-user-profile::default.user_menu_label')),
                     ]);
                 }
-            } else {
-                Filament::getCurrentPanel()->userMenuItems([
-                    'account' => MenuItem::make()->url($this->getProfilePage()::getUrl())->label(__('filament-user-profile::default.user_menu_label')),
-                ]);
-            }
-        });
+            });
         }
     }
 
