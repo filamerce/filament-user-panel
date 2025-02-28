@@ -73,7 +73,7 @@ UserProfilePlugin::make()
 use My\Component\SomeComponent;
 
 UserProfilePlugin::make()
-    ->replaceProfileComponent('some_component', SomeComponent::class);
+    ->registerProfileComponent('some_component', SomeComponent::class);
 ```
 
 ### Remove Profile Component
