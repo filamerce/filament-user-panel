@@ -171,10 +171,21 @@ class UserProfilePlugin implements Plugin
                 fn (string $component, $key) => Livewire::component($key, $component)
             )
             ->filter(
-                fn (string $component) => $component::canView()
+                function (string $component) {
+                    if (\method_exists($component, 'canView')) {
+                        return $component::canView();
+                    }
+                   return true;
+                }
             )
             ->sortBy(
-                fn (string $component) => $component::getSort()
+                function(string $component) {
+                    if (\method_exists($component, 'getSort')) {
+                        return $component::getSort();
+                    }
+                    // put at last place
+                    return 999;
+                }
             );
 
         return $components;
