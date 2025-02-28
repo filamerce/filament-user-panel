@@ -125,7 +125,7 @@ class UserProfilePlugin implements Plugin
         if ($this->registerUserMenu) {
             if (Filament::getCurrentPanel()->hasTenancy()) {
                 // @phpstan-ignore-next-line
-                $tenantId = Filament::getTenant()->id;
+                $tenantId = request()->route()->parameter('tenant');
                 if ($tenantId && $tenant = app(Filament::getCurrentPanel()->getTenantModel())::where(Filament::getCurrentPanel()->getTenantSlugAttribute() ?? 'id', $tenantId)->first()) {
                     Filament::getCurrentPanel()->userMenuItems([
                         'account' => MenuItem::make()->url($this->getProfilePage()::getUrl(panel: Filament::getCurrentPanel()->getId(), tenant: $tenant))->label($this->userMenuLabel),
