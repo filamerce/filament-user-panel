@@ -10,6 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Tables;
 use Filamerce\FilamentUserProfile\UserProfilePlugin;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 
 class SanctumTokens extends MyProfileComponent implements Tables\Contracts\HasTable
@@ -37,9 +38,15 @@ class SanctumTokens extends MyProfileComponent implements Tables\Contracts\HasTa
     {
         $auth = Filament::getCurrentPanel()->auth();
 
-        return app(Sanctum::$personalAccessTokenModel)->where([
+        /** @var PersonalAccessToken $sanctumModel */
+        $sanctumModel = Sanctum::$personalAccessTokenModel;
+
+        /** @var \Illuminate\Database\Eloquent\Model $user */
+        $user = $auth->user();
+
+        return app($sanctumModel)->where([
             ['tokenable_id', '=', $auth->id()],
-            ['tokenable_type', '=', $auth->user()->getMorphClass()],
+            ['tokenable_type', '=', $user->getMorphClass()],
         ]);
     }
 

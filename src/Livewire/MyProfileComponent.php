@@ -8,9 +8,11 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Livewire\Component;
 
-class MyProfileComponent extends Component implements HasActions, HasForms
+abstract class MyProfileComponent extends Component implements HasActions, HasForms
 {
     use InteractsWithActions, InteractsWithForms;
+
+    protected string $view;
 
     public static $sort = 0;
 

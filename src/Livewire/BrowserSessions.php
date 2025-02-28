@@ -108,6 +108,7 @@ class BrowserSessions extends MyProfileComponent
             return;
         }
 
+        // @phpstan-ignore-next-line
         Auth::guard()->logoutOtherDevices($password);
 
         request()->session()->put([

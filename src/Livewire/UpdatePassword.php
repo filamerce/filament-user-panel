@@ -49,7 +49,7 @@ class UpdatePassword extends MyProfileComponent
 
     public function submit()
     {
-        $data = collect($this->form->getState())->only('new_password')->all();
+        $data = collect($this->getForm('form')->getState())->only('new_password')->all();
         $this->user->update([
             'password' => Hash::make($data['new_password']),
         ]);

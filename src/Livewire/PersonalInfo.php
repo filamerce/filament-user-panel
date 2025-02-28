@@ -7,6 +7,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filamerce\FilamentUserProfile\UserProfilePlugin;
+use Illuminate\Database\Eloquent\Model;
 
 class PersonalInfo extends MyProfileComponent
 {
@@ -36,11 +37,10 @@ class PersonalInfo extends MyProfileComponent
 
         $this->hasAvatars = UserProfilePlugin::get()->hasAvatars();
 
-        if ($this->hasAvatars) {
-            $this->only[] = $this->getAvatarUploadComponent()->getStatePath(false);
-        }
-
-        $this->form->fill($this->user->toArray());
+        /** @var Model $userModel */
+        $userModel = $this->user;
+        //
+        $this->getForm('form')->fill($userModel->toArray());
     }
 
     protected function getProfileFormSchema(): array
@@ -64,10 +64,13 @@ class PersonalInfo extends MyProfileComponent
 
     protected function getEmailComponent(): Forms\Components\TextInput
     {
+        /** @var Model $userModel */
+        $userModel = $this->user;
+
         return Forms\Components\TextInput::make('email')
             ->required()
             ->email()
-            ->unique($this->userClass, ignorable: $this->user)
+            ->unique($this->userClass, ignorable: $userModel)
             ->label(__('filament-user-profile::default.fields.email'));
     }
 
@@ -80,8 +83,11 @@ class PersonalInfo extends MyProfileComponent
 
     public function submit(): void
     {
-        $data = collect($this->form->getState())->all();
-        $this->user->update($data);
+        /** @var Model $userModel */
+        $userModel = $this->user;
+
+        $data = collect($this->getForm('form')->getState())->all();
+        $userModel->update($data);
         $this->sendNotification();
     }
 
