@@ -4,15 +4,14 @@ namespace Filamerce\FilamentUserProfile\Livewire;
 
 use Carbon\Carbon;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Jenssegers\Agent\Agent;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Actions;
-use Illuminate\Support\Facades\Session;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Jenssegers\Agent\Agent;
 
 class BrowserSessions extends MyProfileComponent
 {
@@ -24,16 +23,12 @@ class BrowserSessions extends MyProfileComponent
 
     public static $sort = 50;
 
-    public function mount(Request $request)
-    {
-
-    }
+    public function mount(Request $request) {}
 
     public static function canView(): bool
     {
         return config('session.driver') === 'database';
     }
-
 
     public function form(Form $form): Form
     {

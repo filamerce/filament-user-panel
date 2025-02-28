@@ -3,10 +3,9 @@
 namespace Filamerce\FilamentUserProfile\Tests;
 
 use Filament\FilamentServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Filamerce\FilamentUserProfile\FilamentUserProfileServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Filamerce\FilamentUserProfile\FilamentUserProfileServiceProvider;
 
 class TestCase extends Orchestra
 {

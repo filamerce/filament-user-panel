@@ -3,14 +3,14 @@
 namespace Filamerce\FilamentUserProfile\Livewire;
 
 use Carbon\Carbon;
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Get;
-use Laravel\Sanctum\Sanctum;
 use Filament\Facades\Filament;
+use Filament\Forms;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables;
 use Filamerce\FilamentUserProfile\UserProfilePlugin;
+use Illuminate\Database\Eloquent\Builder;
+use Laravel\Sanctum\Sanctum;
 
 class SanctumTokens extends MyProfileComponent implements Tables\Contracts\HasTable
 {
@@ -43,7 +43,8 @@ class SanctumTokens extends MyProfileComponent implements Tables\Contracts\HasTa
         ]);
     }
 
-    public static function canView():bool {
+    public static function canView(): bool
+    {
         return class_exists('Laravel\Sanctum\Sanctum');
     }
 

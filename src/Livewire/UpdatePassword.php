@@ -8,7 +8,6 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Filamerce\FilamentUserProfile\UserProfilePlugin;
 
 class UpdatePassword extends MyProfileComponent
 {
