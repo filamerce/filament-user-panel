@@ -1,12 +1,12 @@
 # Filament User Panel
 
-This package is inspired by [Filament Breezy](https://github.com/jeffgreco13/filament-breezy) but does not include 2FA functionality.
+This package draws inspiration from [Filament Breezy](https://github.com/jeffgreco13/filament-breezy) but does not include two-factor authentication (2FA) functionality.
 
-Instead of offering multiple plugin options, this package provides a streamlined approach to extending and replacing components.
+Rather than offering multiple plugin options, this package provides a streamlined approach to extending and replacing components.
 
 ## Installation
 
-To install the package, run the following command:
+To install the package, execute the following command:
 
 ```sh
 composer require filamerce/filament-user-panel
@@ -14,7 +14,7 @@ composer require filamerce/filament-user-panel
 
 ## Register Plugin
 
-To register the plugin, use the following code:
+To register the plugin, use the following code snippet:
 
 ```php
 use Filamerce\FilamentUserProfile\UserProfilePlugin;
@@ -37,7 +37,7 @@ UserProfilePlugin::make()
 
 ### Custom Profile Page
 
-Replace the entire `ProfilePage` with your own component:
+Replace the entire `ProfilePage` with your custom component:
 
 ```php
 UserProfilePlugin::make()
@@ -46,7 +46,7 @@ UserProfilePlugin::make()
 
 ### Custom Profile Components
 
-Take control over the registered components and their order:
+Manage the registered components and their order:
 
 ```php
 use Filamerce\FilamentUserProfile\Livewire\PersonalInfo;
@@ -58,7 +58,10 @@ UserProfilePlugin::make()
         'update_password' => UpdatePassword::class,
     ]);
 ```
+
 ### Replace Profile Component
+
+Replace a specific profile component:
 
 ```php
 use My\Component\PersonalInfo;
@@ -69,6 +72,8 @@ UserProfilePlugin::make()
 
 ### Register New Profile Component
 
+Register a new profile component:
+
 ```php
 use My\Component\SomeComponent;
 
@@ -77,6 +82,8 @@ UserProfilePlugin::make()
 ```
 
 ### Remove Profile Component
+
+Remove a specific profile component:
 
 ```php
 use My\Component\SomeComponent;
@@ -87,7 +94,7 @@ UserProfilePlugin::make()
 
 ## Laravel Sanctum
 
-Laravel Sanctum is detected automatically, and a component to manage Sanctum tokens is displayed in the profile. You can control the available abilities with the following code:
+Laravel Sanctum is automatically detected, and a component to manage Sanctum tokens is displayed in the profile. Control the available abilities with the following code:
 
 ```php
 UserProfilePlugin::make()
@@ -95,3 +102,12 @@ UserProfilePlugin::make()
 ```
 
 By default, all tokens are registered with all abilities (`[*]`).
+
+## Two-Factor Authentication
+
+This package is compatible with [stephenjude/filament-two-factor-authentication](https://github.com/stephenjude/filament-two-factor-authentication). Simply register the component as shown below:
+
+```php
+UserProfilePlugin::make()
+    ->registerProfileComponent('2fa', \Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication::class)
+```
