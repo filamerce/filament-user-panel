@@ -2,6 +2,8 @@
 
 This package is inspired by [Filament Breezy](https://github.com/jeffgreco13/filament-breezy) but does not include 2FA functionality.
 
+Instead of offering multiple plugin options, this package provides a streamlined approach to extending and replacing components.
+
 ## Installation
 
 To install the package, run the following command:

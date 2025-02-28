@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'user_menu_label' => 'Mój profil',
     'profile' => [
         'account' => 'Konto',
         'profile' => 'Profil',
@@ -36,7 +37,11 @@ return [
             ],
             'notify' => 'Hasło zostało zaktualizowane pomyślnie!',
         ],
-
+        'password_confirm' => [
+            'heading' => 'Potwierdź hasło',
+            'description' => 'Proszę potwierdzić swoje hasło, aby ukończyć tę akcję.',
+            'current_password' => 'Aktualne hasło',
+        ],
         'sanctum' => [
             'title' => 'Tokeny API',
             'description' => 'Zarządzaj tokenami API, które pozwalają aplikacjom zewnętrznym uzyskać dostęp do Twoich danych.',

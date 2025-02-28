@@ -32,8 +32,6 @@ class UserProfilePlugin implements Plugin
 
     protected bool $registerUserMenu = true;
 
-    protected string $userMenuLabel = 'My Profile';
-
     protected bool $hasAvatars = false;
 
     protected array $sanctumAbilities = [];
@@ -133,10 +131,9 @@ class UserProfilePlugin implements Plugin
         );
     }
 
-    public function registerUserMenu(bool $condition = true, string $label = 'My Profile')
+    public function registerUserMenu(bool $condition = true,)
     {
         $this->registerUserMenu = $condition;
-        $this->userMenuLabel = $label;
 
         return $this;
     }
@@ -144,19 +141,21 @@ class UserProfilePlugin implements Plugin
     private function userMenuRegistration()
     {
         if ($this->registerUserMenu) {
+            Filament::serving(function () {
             if (Filament::getCurrentPanel()->hasTenancy()) {
                 // @phpstan-ignore-next-line
                 $tenantId = request()->route()->parameter('tenant');
                 if ($tenantId && $tenant = app(Filament::getCurrentPanel()->getTenantModel())::where(Filament::getCurrentPanel()->getTenantSlugAttribute() ?? 'id', $tenantId)->first()) {
                     Filament::getCurrentPanel()->userMenuItems([
-                        'account' => MenuItem::make()->url($this->getProfilePage()::getUrl(panel: Filament::getCurrentPanel()->getId(), tenant: $tenant))->label($this->userMenuLabel),
+                        'account' => MenuItem::make()->url($this->getProfilePage()::getUrl(panel: Filament::getCurrentPanel()->getId(), tenant: $tenant))->label(__('filament-user-profile::default.user_menu_label')),
                     ]);
                 }
             } else {
                 Filament::getCurrentPanel()->userMenuItems([
-                    'account' => MenuItem::make()->url($this->getProfilePage()::getUrl())->label($this->userMenuLabel),
+                    'account' => MenuItem::make()->url($this->getProfilePage()::getUrl())->label(__('filament-user-profile::default.user_menu_label')),
                 ]);
             }
+        });
         }
     }
 
