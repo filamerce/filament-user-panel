@@ -68,7 +68,7 @@ class PersonalInfo extends MyProfileComponent
     public function form(Form $form): Form
     {
         return $form
-            ->schema($this->getProfileFormSchema())->columns(2)
+            ->schema($this->getProfileFormSchema())
             ->statePath('data');
     }
 
