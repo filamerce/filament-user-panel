@@ -175,14 +175,16 @@ class UserProfilePlugin implements Plugin
                     if (\method_exists($component, 'canView')) {
                         return $component::canView();
                     }
-                   return true;
+
+                    return true;
                 }
             )
             ->sortBy(
-                function(string $component) {
+                function (string $component) {
                     if (\method_exists($component, 'getSort')) {
                         return $component::getSort();
                     }
+
                     // put at last place
                     return 999;
                 }
