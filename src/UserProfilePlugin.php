@@ -87,6 +87,27 @@ class UserProfilePlugin implements Plugin
         return $this->profileComponents;
     }
 
+    public function replaceProfileComponent(string $key, string $component): static
+    {
+        $this->profileComponents[$key] = $component;
+
+        return $this;
+    }
+
+    public function removeProfileComponent(string $key): static
+    {
+        unset($this->profileComponents[$key]);
+
+        return $this;
+    }
+
+    public function registerProfileComponent(string $key, string $component): static
+    {
+        $this->profileComponents[$key] = $component;
+
+        return $this;
+    }
+
     public function sanctumAbilities(array $abilities): static
     {
         $this->sanctumAbilities = $abilities;
@@ -137,11 +158,6 @@ class UserProfilePlugin implements Plugin
                 ]);
             }
         }
-    }
-
-    public function hasAvatars()
-    {
-        return $this->hasAvatars;
     }
 
     public function slug(): string

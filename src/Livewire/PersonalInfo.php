@@ -6,7 +6,6 @@ use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
-use Filamerce\FilamentUserProfile\UserProfilePlugin;
 use Illuminate\Database\Eloquent\Model;
 
 class PersonalInfo extends MyProfileComponent
@@ -19,15 +18,9 @@ class PersonalInfo extends MyProfileComponent
 
     public $userClass;
 
-    public bool $hasAvatars;
-
     public static $sort = 10;
 
-    public function getAvatarUploadComponent(): Forms\Components\FileUpload
-    {
-        return Forms\Components\FileUpload::make('avatar_url')
-            ->label(__('filament-user-profile::default.fields.avatar'))->avatar();
-    }
+    public array $only = ['name', 'email'];
 
     public function mount(): void
     {
@@ -35,12 +28,10 @@ class PersonalInfo extends MyProfileComponent
 
         $this->userClass = get_class($this->user);
 
-        $this->hasAvatars = UserProfilePlugin::get()->hasAvatars();
-
         /** @var Model $userModel */
         $userModel = $this->user;
         //
-        $this->getForm('form')->fill($userModel->toArray());
+        $this->getForm('form')->fill($userModel->only($this->only));
     }
 
     protected function getProfileFormSchema(): array
@@ -50,9 +41,9 @@ class PersonalInfo extends MyProfileComponent
             $this->getEmailComponent(),
         ])->columnSpan(2);
 
-        return ($this->hasAvatars)
-            ? [$this->getAvatarUploadComponent(), $groupFields]
-            : [$groupFields];
+        return [
+            $groupFields,
+        ];
     }
 
     protected function getNameComponent(): Forms\Components\TextInput
@@ -86,8 +77,10 @@ class PersonalInfo extends MyProfileComponent
         /** @var Model $userModel */
         $userModel = $this->user;
 
-        $data = collect($this->getForm('form')->getState())->all();
+        $data = collect($this->getForm('form')->getState())->only($this->only)->all();
+
         $userModel->update($data);
+
         $this->sendNotification();
     }
 
